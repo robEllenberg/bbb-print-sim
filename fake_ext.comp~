@@ -1,0 +1,38 @@
+component fake_ext "Fakes extruder output and prints the values";
+pin in float cross = 999.999;
+pin in bit enable = 0;
+pin in float x_pos = 0.0;
+pin in float y_pos = 0.0;
+pin in float x_vel = 0.0;
+pin in float y_vel = 0.0;
+pin in bit zero_trigger = 0;
+function _ fp;
+license "GPL";
+;;
+double last_cross = 999.999; // absurd value to get change immediately
+int last_enable = 12; // also impossible value
+int changes = 0; // count how often the value has changed
+int last_zero_trigger = 0; // trigger to reset positions
+double zero_x = 0.0;
+double zero_y = 0.0;
+FUNCTION(_) {
+  if (zero_trigger != last_zero_trigger) {
+    zero_x = x_pos;
+    zero_y = y_pos;
+    last_zero_trigger = zero_trigger;
+    changes = 0;
+  }
+  if ((cross != last_cross) || (last_enable != enable)) {
+    last_cross = cross;
+    last_enable = enable;
+    changes++;
+    printf("#%i: en=%i, cross=%f, x-pos=%f, y-pos=%f, x-vel=%f, y-vel=%f\n",
+           changes,
+           last_enable,
+           last_cross,
+           x_pos - zero_x,
+           y_pos - zero_y,
+           x_vel,
+           y_vel);
+  }
+}
