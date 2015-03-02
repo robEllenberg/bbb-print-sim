@@ -16,7 +16,7 @@ try:
     launcher.check_installation()                                     # make sure the Machinekit installation is sane
     launcher.cleanup_session()                                        # cleanup a previous session
     #launcher.load_bbio_file('myoverlay.bbio')                         # load a BBB universal overlay
-    #launcher.install_comp('fake_ext.comp')                              # install a comp HAL component of not already installed
+    launcher.install_comp('ringlog.comp')                              # install a comp HAL component of not already installed
     launcher.start_process("configserver -n Testmachine")   # start the configserver
     launcher.start_process('linuxcnc axis.ini')                        # start linuxcnc
 except subprocess.CalledProcessError:
