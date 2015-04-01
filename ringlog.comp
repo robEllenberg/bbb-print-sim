@@ -52,6 +52,10 @@ FUNCTION(_) {
             }
         }
         write_prev = write;
+
+	if (outbuf.data > 50000) {
+	   rtapi_print_msg(RTAPI_MSG_ERR, "Threshold!!!");
+	}
     }
 }
 

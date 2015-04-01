@@ -86,3 +86,13 @@ newpin fdm-ve-jog fdm-ve-jog.max-velocity   float in
 ready  fdm-ve-jog
 
 setp fdm-ve-jog.max-velocity 10
+
+# this creates the named ring ring_0
+loadrt ringload num_rings=1 size=16000
+
+# attach to ring_0
+loadrt ringlog ring=ring_0
+setp ringlog.continous TRUE
+net tptime motion-controller.time ringlog.in
+
+addf ringlog servo-thread
